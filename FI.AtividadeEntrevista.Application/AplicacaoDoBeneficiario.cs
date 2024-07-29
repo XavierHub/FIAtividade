@@ -39,7 +39,7 @@ namespace FI.AtividadeEntrevista.Application
             foreach (var model in models)
             {
                 if (!await _servicoValidacao.Validar(TipoValidacao.Alterar, model) ||
-                    !await _servicoValidacao.CPFValido(model.CPF))
+                    !await _servicoValidacao.CPFValido(model.CPF, $"O CPF '{model.CPF}' do beneficiário '{model.Nome}' está inválido"))
                 {
                     return false;
                 }
@@ -68,7 +68,7 @@ namespace FI.AtividadeEntrevista.Application
                 {
                     if (entidades.Any(x => x.CPF == item.CPF))
                     {
-                        _servicoNotificacao.Adicionar("CPF", $"O CPF {item.CPF} do Beneficiário já está cadastrado");
+                        _servicoNotificacao.Adicionar("CPF", $"O CPF '{item.CPF}' do beneficiário já está cadastrado");
 
                     }
                     await _beneficiarioRepositorio.ExecutarProcedure<long>("FI_SP_IncBeneficiario", new { item.CPF, item.Nome, idCliente });

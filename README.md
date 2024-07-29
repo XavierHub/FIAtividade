@@ -70,3 +70,22 @@ Este projeto foi ajustado utilizando as melhores práticas de Domain Driven Desi
   
   ![Screenshots](projetoBancoDeDados.PNG) <br><br>
   
+  
+  ![Screenshots](modelagemTabelas.PNG) <br><br>
+  
+  
+## Casos de Testes
+
+![Screenshots](testesDeUnidade.PNG) <br><br>
+
+### Executar os Casos de Teste
+
+ - Abrir o Explorador de Testes
+   No Visual Studio, vá para Testar > Janela > Explorador de Testes.
+ 
+ - Compilar a Solução
+	Certifique-se de que a solução está compilada. Clique em Compilar > Compilar Solução ou pressione Ctrl+Shift+B.
+	
+ - Executar os Testes
+   No Explorador de Testes, você verá uma lista de todos os testes disponíveis.
+   Clique em Executar Tudo para executar todos os testes ou selecione testes individuais e clique em Executar Selecionados.
