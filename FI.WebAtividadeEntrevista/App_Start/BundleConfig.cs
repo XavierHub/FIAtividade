@@ -1,16 +1,13 @@
 ﻿using FI.WebAtividadeEntrevista.App_Start;
-using System;
 using System.Web.Optimization;
 
 namespace FI.WebAtividadeEntrevista
 {
     public class BundleConfig
     {
-        // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Clear();
-            var version = DateTime.Now.Ticks.ToString();
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js").WithVersion());

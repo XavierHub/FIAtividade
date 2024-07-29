@@ -1,8 +1,6 @@
 ﻿using Dapper;
 using Dommel;
 using FI.AtividadeEntrevista.Dominio.Abstracoes.Aplicacao.Repositorios;
-using FI.AtividadeEntrevista.Utils;
-using FI.AtividadeEntrevista.Utils.Enumeradores;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -23,60 +21,12 @@ namespace FI.AtividadeEntrevista.Repositorio
 
         }
 
-        public async Task<IEnumerable<T>> Todos()
-        {
-            using (var connection = ObterConexao())
-            {
-                await connection.OpenAsync();
-                return await connection.GetAllAsync<T>();
-            }
-        }
-
         public async Task<T> ObterPorId(object parm)
         {
             using (var connection = ObterConexao())
             {
                 await connection.OpenAsync();
                 return await connection.GetAsync<T>(parm) ?? Activator.CreateInstance<T>();
-            }
-        }
-
-        public async Task<T> Obter(string spName, object parm = null)
-        {
-            using (var connection = ObterConexao())
-            {
-                await connection.OpenAsync();
-                var result = await connection.QueryAsync<T>(spName,
-                                                            param: parm,
-                                                            commandType: CommandType.StoredProcedure);
-                return result.FirstOrDefault() ?? Activator.CreateInstance<T>();
-            }
-        }
-
-        public async Task<bool> Excluir(T entity)
-        {
-            using (var connection = ObterConexao())
-            {
-                await connection.OpenAsync();
-                return await connection.DeleteAsync(entity);
-            }
-        }
-
-        public async Task<bool> Atualizar(T entity)
-        {
-            using (var connection = ObterConexao())
-            {
-                await connection.OpenAsync();
-                return await connection.UpdateAsync<T>(entity);
-            }
-        }
-
-        public async Task<object> Incluir(T entity)
-        {
-            using (var connection = ObterConexao())
-            {
-                await connection.OpenAsync();
-                return await connection.InsertAsync(entity);
             }
         }
 
@@ -87,24 +37,6 @@ namespace FI.AtividadeEntrevista.Repositorio
                 await connection.OpenAsync();
                 return await connection.SelectAsync(expression);
             }
-        }
-
-        public async Task<Resultado<IEnumerable<T>>> Consultar(string spName, List<Parametro> parametros)
-        {
-            var parameters = ObterParametros(parametros);
-            var resultado = new Resultado<IEnumerable<T>>();
-
-            using (var connection = ObterConexao())
-            {
-                await connection.OpenAsync();
-                resultado.Dados = await connection.QueryAsync<T>(spName,
-                                                        param: parameters,
-                                                        commandType: CommandType.StoredProcedure);
-            }
-
-            resultado.Parametros = ObterValoresDeSaida(parametros, parameters);
-
-            return resultado;
         }
 
         public async Task<(IEnumerable<T>, U)> ConsultarMultSelecao<U>(string spName, object parmIn = null)
@@ -122,50 +54,17 @@ namespace FI.AtividadeEntrevista.Repositorio
             }
         }
 
-        private List<Parametro> ObterValoresDeSaida(List<Parametro> parametros, DynamicParameters parameters)
-        {
-            foreach (var parm in parametros.Where(x => x.Direcao == ParametroDirecao.Saida))
-            {
-                parm.Value = parameters.Get<dynamic>(parm.Nome);
-            }
-            return parametros;
-        }
-
-        private DynamicParameters ObterParametros(List<Parametro> dbParametros)
-        {
-            var parameters = new DynamicParameters();
-            dbParametros.ForEach(parm =>
-                parameters.Add(parm.Nome,
-                               parm.Value,
-                               direction: parm.Direcao == ParametroDirecao.Entrada ?
-                                                          ParameterDirection.Input : ParameterDirection.Output
-                              )
-            );
-            return parameters;
-        }
-
         public async Task<U> ExecutarProcedure<U>(string spName, object parmIn = null)
         {
-            try
+            using (var connection = ObterConexao())
             {
-                using (var connection = ObterConexao())
-                {
-                    await connection.OpenAsync();
+                await connection.OpenAsync();
 
-                    var result = await connection.QueryAsync<U>(spName,
-                                                                param: parmIn,
-                                                                commandType: CommandType.StoredProcedure);
-                    return result.FirstOrDefault();
+                var result = await connection.QueryAsync<U>(spName,
+                                                            param: parmIn,
+                                                            commandType: CommandType.StoredProcedure);
+                return result.FirstOrDefault();
 
-                }
-            }
-            catch (SqlException sqlEx)
-            {
-                throw sqlEx;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
         }
 

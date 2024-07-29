@@ -436,10 +436,6 @@
       <Project>{01D3D100-7DB4-4C90-9ACF-AA894EFC2964}</Project>
       <Name>FI.AtividadeEntrevista.Repositorio</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FI.AtividadeEntrevista.Utils\FI.AtividadeEntrevista.Utils.csproj">
-      <Project>{6ae4551c-4664-4bf6-9c9c-33c6a6536d2f}</Project>
-      <Name>FI.AtividadeEntrevista.Utils</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

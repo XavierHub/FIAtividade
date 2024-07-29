@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FI.AtividadeEntrevista.Domain\FI.AtividadeEntrevista.Dominio.csproj" />
-    <ProjectReference Include="..\FI.AtividadeEntrevista.Utils\FI.AtividadeEntrevista.Utils.csproj" />
   </ItemGroup>
 
 </Project>

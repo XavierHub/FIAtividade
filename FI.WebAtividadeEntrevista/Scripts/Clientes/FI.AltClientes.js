@@ -1,4 +1,10 @@
 ﻿$(document).ready(function () {
+
+    var id = parseInt($("#Id").val());
+    if (id > 0) {
+        $("#CPF").prop("readonly", true).addClass("readonly");
+    }
+
     $('#formCadastro').submit(function (e) {
         e.preventDefault();
 

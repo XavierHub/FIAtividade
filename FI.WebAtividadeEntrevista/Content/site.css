@@ -23,6 +23,10 @@ div.jtable-main-container > jtable-left-area {
     color: inherit !important;
 }
 
+.readonly {
+    background-color: #e9ecef;
+}
+
 #loading {
     position: fixed;
     width: 100%;

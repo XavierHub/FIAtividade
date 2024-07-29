@@ -46,7 +46,8 @@ namespace WebAtividadeEntrevista.Controllers
             }
 
             var entity = await _aplicacaoDoCliente.Inserir(FillCliente(model));
-            await _aplicacaoDoBeneficiario.Alterar(entity.Id, FillBeneficiarios(model.Beneficiarios?.ToList(), entity.Id));
+            if (entity.Id > 0)
+                await _aplicacaoDoBeneficiario.Alterar(entity.Id, FillBeneficiarios(model.Beneficiarios?.ToList(), entity.Id));
 
             return Json("Cadastro efetuado com sucesso").ComNotificacoes(_servicoNotificacao, Response);
         }
@@ -94,7 +95,7 @@ namespace WebAtividadeEntrevista.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { Result = "ERROR", Message = ex.Message });
+                return Json(new { Result = "ERROR", ex.Message });
             }
         }
 

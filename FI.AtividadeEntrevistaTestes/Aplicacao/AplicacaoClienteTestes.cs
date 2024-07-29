@@ -53,7 +53,7 @@ namespace FI.AtividadeEntrevista.Tests.Aplicacao
         {
             // Arrange
             var cliente = new Cliente { Id = 1, Nome = "Teste" };
-            
+
             _mockServicoValidacao.Setup(x => x.ValorValido(It.IsAny<string>(), It.IsAny<long>(), It.IsAny<Func<long, bool>>(), It.IsAny<string>()))
                                  .ReturnsAsync(true);
 

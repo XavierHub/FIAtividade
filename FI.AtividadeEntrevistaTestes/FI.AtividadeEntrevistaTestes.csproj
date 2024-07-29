@@ -90,8 +90,14 @@
   <ItemGroup>
     <Compile Include="Aplicacao\AplicacaoBeneficiarioTestes.cs" />
     <Compile Include="Aplicacao\AplicacaoClienteTestes.cs" />
+    <Compile Include="Aplicacao\Servicos\ServicoNotificacaoTestes.cs" />
+    <Compile Include="Aplicacao\Servicos\Validadores\ServicoValidacaoBeneficiarioTestes.cs" />
+    <Compile Include="Aplicacao\Servicos\Validadores\ServicoValidacaoClienteTestes.cs" />
+    <Compile Include="Aplicacao\Servicos\Validadores\ValidadorCPF.cs" />
     <Compile Include="Controller\ClienteControllerTestes.cs" />
     <Compile Include="Controller\BeneficiarioControllerTests.cs" />
+    <Compile Include="Controller\HomeControllerTestes.cs" />
+    <Compile Include="Controller\JsonResultExtensionsTests.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -111,10 +117,6 @@
     <ProjectReference Include="..\FI.AtividadeEntrevista.Repositorio\FI.AtividadeEntrevista.Repositorio.csproj">
       <Project>{01d3d100-7db4-4c90-9acf-aa894efc2964}</Project>
       <Name>FI.AtividadeEntrevista.Repositorio</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FI.AtividadeEntrevista.Utils\FI.AtividadeEntrevista.Utils.csproj">
-      <Project>{6ae4551c-4664-4bf6-9c9c-33c6a6536d2f}</Project>
-      <Name>FI.AtividadeEntrevista.Utils</Name>
     </ProjectReference>
     <ProjectReference Include="..\FI.WebAtividadeEntrevista\FI.WebAtividadeEntrevista.csproj">
       <Project>{eda04bc2-efc2-487f-8f40-a95c652f6a15}</Project>

@@ -13,7 +13,7 @@ namespace FI.WebAtividadeEntrevista.Extensions
             if (servicoNotificacao.TemNotificacao())
             {
                 response.StatusCode = 400;
-                var erros = string.Join("<br>", servicoNotificacao.Notificacoes().Select(n => $"{n.Chave}: {n.Mensagem}"));
+                var erros = string.Join("<br>", servicoNotificacao.Notificacoes().Select(n => n.Mensagem));
                 jsonResult = new JsonResult { Data = erros, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
             return jsonResult;
