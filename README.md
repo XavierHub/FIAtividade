@@ -57,3 +57,16 @@ Este projeto foi ajustado utilizando as melhores práticas de Domain Driven Desi
 
 ### Domain Notifications
 - **Implementação**: Utilização de um serviço de notificações para gerenciar e comunicar erros e validações de negócio, permitindo uma comunicação clara e consistente entre as camadas do sistema.
+
+## Solução
+![Screenshots](solucao.PNG) <br><br>
+
+- "01 WebApp" estão as telas da aplicação.
+- "02 Dominio" possui as classes de domino do sistemas e abstrações para implementar as funcionalidades
+- "03 Aplicacao" Faz o as validações e chamadas necessárias para orquestrar a lógica de negócio e a interação entre os diferentes componentes do sistema
+- "04 Infraestrutura" Possui o Repository Pattern e bibliotecas de Cross Cutting
+- "05 BancoDeDados" está o projeto de banco de dados.
+   Com este projeto é possível ver facilmente ver as ultimas alterações, comparar os objetos do banco de dados, gerar scripts para alteração e caso necessário fazer updates
+  
+  ![Screenshots](projetoBancoDeDados.PNG) <br><br>
+  
