@@ -1,0 +1,39 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+div.jtable-main-container > div.jtable-title{
+    display:flex !important;
+}
+
+div.jtable-main-container > div.jtable-title div.jtable-toolbar,
+div.jtable-main-container > div.jtable-title div.jtable-title-text {
+    background: inherit !important;
+}
+
+div.jtable-main-container > jtable-left-area {
+    background: inherit !important;
+    color: inherit !important;
+}
+
+#loading {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+

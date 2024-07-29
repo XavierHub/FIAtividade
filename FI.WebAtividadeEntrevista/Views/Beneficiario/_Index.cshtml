@@ -1,0 +1,35 @@
+﻿@model WebAtividadeEntrevista.Models.BeneficiarioModel
+
+<form id="formBeneficiario" method="post">
+    <section id="beneficiarioForm" class="row px-2">
+        <div class="col-md-5">
+            <label for="CPFBeneficiario" class="form-label fw-bold">CPF</label>
+            @Html.EditorFor(model => model.CPF, new { htmlAttributes = new { @class = "form-control cpf required", @id = "CPFBeneficiario", @placeholder = "Ex.: 999.999.999-99" } })
+            @Html.ValidationMessageFor(model => model.CPF, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-5">
+            <label for="NomeBeneficiario" class="form-label fw-bold">Nome</label>
+            @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control", @id = "NomeBeneficiario", @maxlength = 255, @placeholder = "Ex.: Maria" } })
+            @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-2">
+            <label class="p-1 d-block">&nbsp;</label>
+            <button type="submit" class="btn btn-success" id="btnBeneficiarioIncluir">Incluir</button>
+        </div>
+    </section>
+</form>
+<section class="row">
+    <div class="col-12">
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th class="w-25">CPF</th>
+                    <th class="w-50">Nome</th>
+                    <th class="w-25">Ações</th>
+                </tr>
+            </thead>
+            <tbody id="beneficiariosTableBody">
+            </tbody>
+        </table>
+    </div>
+</section>

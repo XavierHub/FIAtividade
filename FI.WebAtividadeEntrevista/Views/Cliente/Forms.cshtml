@@ -1,0 +1,113 @@
+﻿@model WebAtividadeEntrevista.Models.ClienteModel
+
+<form id="formCadastro" method="post">
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <div class="mb-2">
+                @Html.LabelFor(m => m.Nome, new { @class = "form-label fw-bold" })
+                @Html.EditorFor(m => m.Nome, new { htmlAttributes = new { @class = "form-control", @placeholder = "Ex.: João", maxlength = "50" } })
+                @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
+                @Html.HiddenFor(m => m.Id)
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-2">
+                @Html.LabelFor(m => m.Sobrenome, new { @class = "form-label fw-bold" })
+                @Html.EditorFor(m => m.Sobrenome, new { htmlAttributes = new { @class = "form-control", @placeholder = "Ex.: da Silva", maxlength = "255" } })
+                @Html.ValidationMessageFor(m => m.Sobrenome, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <div class="mb-2">
+                @Html.LabelFor(m => m.CPF, new { @class = "form-label fw-bold" })
+                @Html.EditorFor(m => m.CPF, new { htmlAttributes = new { @class = "form-control cpf", @placeholder = "Ex.: 999.999.999-99", maxlength = "14" } })
+                @Html.ValidationMessageFor(m => m.CPF, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-2">
+                @Html.LabelFor(m => m.Nacionalidade, new { @class = "form-label fw-bold" })
+                @Html.EditorFor(m => m.Nacionalidade, new { htmlAttributes = new { @class = "form-control", @placeholder = "Ex.: brasileira", maxlength = "50" } })
+                @Html.ValidationMessageFor(m => m.Nacionalidade, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-md-4">
+            <div class="mb-2">
+                @Html.LabelFor(m => m.CEP, new { @class = "form-label fw-bold" })
+                @Html.EditorFor(m => m.CEP, new { htmlAttributes = new { @class = "form-control", @placeholder = "Ex.: 01011-100", maxlength = "9" } })
+                @Html.ValidationMessageFor(m => m.CEP, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-2">
+                @Html.LabelFor(m => m.Estado, new { @class = "form-label fw-bold" })
+                @Html.DropDownListFor(m => m.Estado, new SelectList(new[] { new { Value = "SP", Text = "São Paulo" }, new { Value = "PE", Text = "Pernambuco" } }, "Value", "Text"), "Selecione", new { @class = "form-select" })
+                @Html.ValidationMessageFor(m => m.Estado, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-2">
+                @Html.LabelFor(m => m.Cidade, new { @class = "form-label fw-bold" })
+                @Html.EditorFor(m => m.Cidade, new { htmlAttributes = new { @class = "form-control", @placeholder = "Ex.: São Paulo", maxlength = "50" } })
+                @Html.ValidationMessageFor(m => m.Cidade, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-md-12">
+            <div class="mb-2">
+                @Html.LabelFor(m => m.Logradouro, new { @class = "form-label fw-bold" })
+                @Html.EditorFor(m => m.Logradouro, new { htmlAttributes = new { @class = "form-control", @placeholder = "Ex.: Rua Boa Vista 253", maxlength = "500" } })
+                @Html.ValidationMessageFor(m => m.Logradouro, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <div class="mb-2">
+                @Html.LabelFor(m => m.Email, new { @class = "form-label fw-bold" })
+                @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Ex.: email@email.com", maxlength = "500" } })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-2">
+                @Html.LabelFor(m => m.Telefone, new { @class = "form-label fw-bold" })
+                @Html.EditorFor(m => m.Telefone, new { htmlAttributes = new { @class = "form-control", @placeholder = "Ex.: (11) 2020-3030", maxlength = "15" } })
+                @Html.ValidationMessageFor(m => m.Telefone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-6">
+            <div class="d-flex justify-content-start">
+                <button type="button" class="btn btn-sm btn-success me-2" id="btnBeneficiarios">Beneficiário</button>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-sm btn-success me-2">Salvar</button>
+                @Html.ActionLink("Voltar", "Index", "Cliente", new { }, new { @class = "btn btn-sm btn-danger" })
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- Modal -->
+<div class="modal fade" id="beneficiariosModal" tabindex="-1" aria-labelledby="beneficiariosModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="z-index: 2;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="beneficiariosModalLabel">Beneficiarios</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body mt-0">
+                @Html.Action("Index", "Beneficiario")
+            </div>
+        </div>
+    </div>
+</div>
