@@ -5,6 +5,7 @@ using FI.AtividadeEntrevista.Dominio.Abstracoes.Servicos;
 using FI.AtividadeEntrevista.Dominio.Enumeradores;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace FI.AtividadeEntrevista.Application
@@ -69,12 +70,37 @@ namespace FI.AtividadeEntrevista.Application
                     if (entidades.Any(x => x.CPF == item.CPF))
                     {
                         _servicoNotificacao.Adicionar("CPF", $"O CPF '{item.CPF}' do beneficiário já está cadastrado");
-
                     }
                     await _beneficiarioRepositorio.ExecutarProcedure<long>("FI_SP_IncBeneficiario", new { item.CPF, item.Nome, idCliente });
                 }
             }
             return true;
+        }
+
+        public async Task<bool> CpfBeneficiarioValido(long? idCliente, List<Beneficiario> models)
+        {
+            var valido = true;
+            foreach (var model in models)
+            {
+                if (!await _servicoValidacao.CPFValido(model.CPF, $"O CPF '{model.CPF}' do beneficiário '{model.Nome}' está inválido"))
+                {
+                    valido = false;
+                }
+            }
+
+            if (idCliente.HasValue)
+            {
+                var cpfs = models.Select(m => m.CPF).ToList();
+                var entidades = await _beneficiarioRepositorio.Consultar(x => x.IdCliente == idCliente && cpfs.Contains(x.CPF));
+
+                foreach (var entidade in entidades)
+                {
+                    var model = models.FirstOrDefault(m => m.CPF == entidade.CPF);
+                    _servicoNotificacao.Adicionar("CPF", $"O CPF '{model.CPF}' do beneficiário '{model.Nome}' já está cadastrado");
+                    valido = false;
+                }
+            }
+            return valido;
         }
 
     }

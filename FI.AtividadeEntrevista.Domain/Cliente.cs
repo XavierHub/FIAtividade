@@ -1,4 +1,6 @@
-﻿namespace FI.AtividadeEntrevista.Dominio
+﻿using System.Collections.Generic;
+
+namespace FI.AtividadeEntrevista.Dominio
 {
     public class Cliente : EntityBase
     {
@@ -12,5 +14,7 @@
         public string Sobrenome { get; set; }
         public string Telefone { get; set; }
         public string CPF { get; set; }
+
+        public List<Beneficiario> Beneficiarios { get; set; }
     }
 }

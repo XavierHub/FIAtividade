@@ -45,9 +45,16 @@ namespace WebAtividadeEntrevista.Controllers
                 return new JsonResult().ComModelStateErros(this.ModelState, Response);
             }
 
+            var benefificarios = FillBeneficiarios(model.Beneficiarios?.ToList(), model.Id);
+
+            if(!await _aplicacaoDoBeneficiario.CpfBeneficiarioValido(model.Id, benefificarios))
+            {
+                return Json("Cadastro não efetuado, beneficiários Inválidos").ComNotificacoes(_servicoNotificacao, Response);
+            }
+
             var entity = await _aplicacaoDoCliente.Inserir(FillCliente(model));
             if (entity.Id > 0)
-                await _aplicacaoDoBeneficiario.Alterar(entity.Id, FillBeneficiarios(model.Beneficiarios?.ToList(), entity.Id));
+                await _aplicacaoDoBeneficiario.Alterar(entity.Id, benefificarios);
 
             return Json("Cadastro efetuado com sucesso").ComNotificacoes(_servicoNotificacao, Response);
         }
@@ -111,16 +118,16 @@ namespace WebAtividadeEntrevista.Controllers
 
         #region private method
 
-        private List<Beneficiario> FillBeneficiarios(List<BeneficiarioModel> models, long idCliente)
+        private List<Beneficiario> FillBeneficiarios(List<BeneficiarioModel> models, long? idCliente)
         {
             if (models == null || models.Count() == 0) return new List<Beneficiario>();
 
             var clientes = models.Select(model => new Beneficiario()
             {
                 Id = (long)(model.Id == null ? 0 : model.Id),
-                IdCliente = idCliente,
-                Nome = model.Nome,
-                CPF = model.CPF
+                IdCliente = idCliente??0,
+                Nome = model.Nome.Trim(),
+                CPF = model.CPF.Trim()
             }).ToList();
 
             return clientes;
@@ -153,16 +160,16 @@ namespace WebAtividadeEntrevista.Controllers
 
             var cliente = new Cliente()
             {
-                CEP = model.CEP,
-                Cidade = model.Cidade,
-                Email = model.Email,
-                Estado = model.Estado,
-                Logradouro = model.Logradouro,
-                Nacionalidade = model.Nacionalidade,
-                Nome = model.Nome,
-                Sobrenome = model.Sobrenome,
-                CPF = model.CPF,
-                Telefone = model.Telefone,
+                CEP = model.CEP.Trim(),
+                Cidade = model.Cidade.Trim(),
+                Email = model.Email.Trim(),
+                Estado = model.Estado.Trim(),
+                Logradouro = model.Logradouro.Trim(),
+                Nacionalidade = model.Nacionalidade.Trim(),
+                Nome = model.Nome.Trim(),
+                Sobrenome = model.Sobrenome.Trim(),
+                CPF = model.CPF.Trim(),
+                Telefone = model.Telefone.Trim(),
             };
             return cliente;
         }

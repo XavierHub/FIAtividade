@@ -49,13 +49,31 @@
         if (!$(this).valid()) return;
 
         // Capturar os valores dos campos
-        var cpf = $('#CPFBeneficiario').val();
-        var nome = $('#NomeBeneficiario').val();
+        var cpf = $('#CPFBeneficiario').val().trim();
+        var nome = $('#NomeBeneficiario').val().trim();
 
         // Validar os campos (simples)
         if (cpf === "" || nome === "") {
             alert("Por favor, preencha todos os campos.");
             return;
+        }
+
+        // Verificar se o CPF já existe na tabela
+        const cpfExists = beneficiarios.some(b => b.cpf === cpf);
+
+        // Não permitir incluir 2 beneficiários com o mesmo CPF
+        if (editIndex === -1 && cpfExists) {
+            alert(`O CPF ${cpf} já está na tabela`);
+            return;
+        }
+
+        // Não permitir alterar o CPF para manter 2 beneficiários com o mesmo CPF na tabela
+        if (editIndex > -1) {
+            const cpfIndex = beneficiarios.findIndex(b => b.cpf === cpf);
+            if (cpfExists && cpfIndex !== editIndex) {
+                alert(`O CPF ${cpf} já está na tabela`);
+                return;
+            }
         }
 
         // Verificar se estamos editando um beneficiário existente

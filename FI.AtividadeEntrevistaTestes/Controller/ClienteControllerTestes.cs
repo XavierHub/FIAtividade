@@ -84,7 +84,9 @@ namespace WebAtividadeEntrevista.Tests.Controllers
                     }
                 }
             };
+
             _mockAplicacaoDoCliente.Setup(x => x.Inserir(It.IsAny<Cliente>())).ReturnsAsync(new Cliente { Id = 1 });
+            _mockAplicacaoDoBeneficiario.Setup(x => x.CpfBeneficiarioValido(It.IsAny<long?>(), It.IsAny<List<Beneficiario>>())).ReturnsAsync(true);
 
             // Act
             var result = await _controller.Incluir(model) as JsonResult;
@@ -93,6 +95,65 @@ namespace WebAtividadeEntrevista.Tests.Controllers
             Assert.IsNotNull(result);
             Assert.AreEqual("Cadastro efetuado com sucesso", result.Data);
         }
+
+        [TestMethod]
+        public async Task Incluir_ModelInvalido_DeveRetornarErrosModelState()
+        {
+            // Arrange
+            var model = new ClienteModel(); // Modelo inválido
+            _controller.ModelState.AddModelError("Nome", "O nome é obrigatório");
+
+            // Act
+            var result = await _controller.Incluir(model) as JsonResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result.Data, typeof(string));
+            Assert.AreEqual("O nome é obrigatório", result.Data);
+        }
+
+        [TestMethod]
+        public async Task Incluir_BeneficiariosInvalidos_DeveRetornarErro()
+        {
+            // Arrange
+            var model = new ClienteModel
+            {
+                CEP = "12345-678",
+                Cidade = "Cidade",
+                Email = "email@teste.com",
+                Estado = "SP",
+                Logradouro = "Logradouro",
+                Nacionalidade = "Brasileiro",
+                Nome = "Nome",
+                Sobrenome = "Sobrenome",
+                CPF = "123.456.789-00",
+                Telefone = "12345-6789",
+                Beneficiarios = new BeneficiarioModel[]
+                {
+                    new BeneficiarioModel
+                    {
+                        IdCliente = 1,
+                        Nome = "Beneficiario",
+                        CPF = "123.456.789-01"
+                    }
+                }
+            };
+
+            _mockAplicacaoDoBeneficiario.Setup(x => x.CpfBeneficiarioValido(It.IsAny<long?>(), It.IsAny<List<Beneficiario>>())).ReturnsAsync(false);
+            _mockServicoNotificacao.Setup(x => x.TemNotificacao()).Returns(true);
+            _mockServicoNotificacao.Setup(x => x.Notificacoes()).Returns(new List<Notificacao>
+            {
+                new Notificacao("CPF", "CPF do beneficiário é inválido")
+            });
+
+            // Act
+            var result = await _controller.Incluir(model) as JsonResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual("CPF do beneficiário é inválido", result.Data);
+        }
+    
 
         [TestMethod]
         public async Task Alterar_ModelInvalido_DeveRetornarErrosDeModelState()

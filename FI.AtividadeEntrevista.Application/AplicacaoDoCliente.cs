@@ -12,13 +12,16 @@ namespace FI.AtividadeEntrevista.Application
     {
         private readonly IRepositorio<Cliente> _clienteRepositorio;
         private readonly IServicoValidacao<Cliente> _servicoValidacao;
-        private readonly IServicoNotificacao _servicoNotificacao;
+        private readonly IServicoNotificacao _servicoNotificacao;        
 
-        public AplicacaoDoCliente(IRepositorio<Cliente> clienteRepositorio, IServicoValidacao<Cliente> servicoValidacao, IServicoNotificacao servicoNotificacao)
+        public AplicacaoDoCliente(IRepositorio<Cliente> clienteRepositorio, 
+                                  IServicoValidacao<Cliente> servicoValidacao, 
+                                  IServicoNotificacao servicoNotificacao                                  
+                                 )
         {
             _clienteRepositorio = clienteRepositorio;
             _servicoValidacao = servicoValidacao;
-            _servicoNotificacao = servicoNotificacao;
+            _servicoNotificacao = servicoNotificacao;            
         }
 
         public async Task<Cliente> ObterPorId(long id)
